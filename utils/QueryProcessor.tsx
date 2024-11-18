@@ -1,6 +1,7 @@
 export default function QueryProcessor(query: string): string {
   const pattern = /What is (\d+) plus (\d+)/i;
   const patternLargest = /Which of the following numbers is the largest: (\d+), (\d+), (\d+)/i;
+  const patternMulti = /What is (\d+) multiplied by (\d+)/i;
   if (query.toLowerCase().includes("shakespeare")) {
     return (
       "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -36,6 +37,15 @@ export default function QueryProcessor(query: string): string {
       const num2 = parseInt(matches[2]);
       const num3 = parseInt(matches[3]);
       return Math.max(num1, num2, num3).toString();
+    }
+  }
+
+  if(query.match(patternMulti)) {
+    const matches = query.match(patternMulti);
+    if (matches) {
+      const num1 = parseInt(matches[1]);
+      const num2 = parseInt(matches[2]);
+      return (num1 * num2).toString();
     }
   }
 
