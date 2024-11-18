@@ -2,6 +2,8 @@ export default function QueryProcessor(query: string): string {
   const pattern = /What is (\d+) plus (\d+)/i;
   const patternLargest = /Which of the following numbers is the largest: (\d+), (\d+), (\d+)/i;
   const patternMulti = /What is (\d+) multiplied by (\d+)/i;
+  const patternPrime = /Which of the following numbers are primes: (\d+), (\d+), (\d+)/i;
+  const bothcubeandsquare = /Which of the following numbers is both a square and a cube: (\d+), (\d+), (\d+), (\d+), (\d+), (\d+), (\d+)/i;
   if (query.toLowerCase().includes("shakespeare")) {
     return (
       "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -49,5 +51,20 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if(query.match(bothcubeandsquare)) {
+    const matches = query.match(bothcubeandsquare);
+    if (matches) {
+      const num1 = parseInt(matches[1]);
+      const num2 = parseInt(matches[2]);
+      const num3 = parseInt(matches[3]);
+      const num4 = parseInt(matches[4]);
+      const num5 = parseInt(matches[5]);
+      const num6 = parseInt(matches[6]);
+      const num7 = parseInt(matches[7]);
+      return [num1, num2, num3, num4, num5, num6, num7].filter((num) => {
+        return Math.sqrt(num) % 1 === 0 && Math.cbrt(num) % 1 === 0;
+      }).join(", ");
+    }
+  }
   return "";
 }
